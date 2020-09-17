@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from './Button'
+import Button from '../Button/Button'
 const logoSVG = require("../../assets/img/pizza-logo.svg") as string;
 
 const Header = () => {

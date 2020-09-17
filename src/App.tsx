@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './components/header/Header'
+import {Header, Categories} from './components'
 
 function App() {
    return (
@@ -9,18 +9,9 @@ function App() {
             <div className="content">
                <div className="container">
                   <div className="content__top">
-                     <div className="categories">
-                        <ul>
-                           <li className="active">Все</li>
-                           <li>Мясные</li>
-                           <li>Вегетарианская</li>
-                           <li>Гриль</li>
-                           <li>Острые</li>
-                           <li>Закрытые</li>
-                        </ul>
-                     </div>
+                     <Categories items={['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']}/>
                      <div className="sort">
-                        <div className="sort__label">
+                        <div className="sort__label">`
                            <svg
                               width="10"
                               height="6"
