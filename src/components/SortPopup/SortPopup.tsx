@@ -11,7 +11,7 @@ type SortPopupPropsType = {
 
 function SortPopup({items}: SortPopupPropsType) {
 
-   const activeItemType = useSelector<AppRootStoreType, FilterSortType>(state => state.filters.sortBy)
+   const activeItemType = useSelector<AppRootStoreType, FilterSortType>(state => state.filtersData.sortBy)
    const dispatch = useDispatch()
 
    React.useEffect(() => {

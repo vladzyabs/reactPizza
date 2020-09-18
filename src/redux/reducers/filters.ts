@@ -15,7 +15,7 @@ const filters = (state = initialState, action: ActionType): InitialStateType => 
       case 'SET_CATEGORY_BY':
          return {...state, category: action.payload}
       default:
-         return {...state, sortBy: 'popular'}
+         return state
    }
 }
 

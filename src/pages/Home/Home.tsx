@@ -1,6 +1,6 @@
 import React from 'react'
 import {Categories, SortPopup, PizzaBlock} from '../../components'
-import {PizzaType} from '../../App'
+import {PizzaType} from '../../redux/types/pizzas'
 import {FilterSortType} from '../../redux/types/filters'
 
 type HomePropsType = {

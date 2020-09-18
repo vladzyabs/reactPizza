@@ -1,28 +1,21 @@
 import React from 'react'
 import {Route} from 'react-router-dom'
-import axios from 'axios'
 import {Header} from './components'
 import {Home, Cart} from './pages'
+import {PizzaType} from './redux/types/pizzas'
+import {useDispatch, useSelector} from 'react-redux'
+import {AppRootStoreType} from './redux/store'
+import {getPizzas} from './redux/actions/pizzas'
 
-export type PizzaType = {
-   id: number
-   imageUrl: string
-   name: string
-   types: number[]
-   sizes: number[]
-   price: number
-   category: number
-   rating: number
-}
 
 function App() {
 
-   const [pizzas, setPizzas] = React.useState<PizzaType[]>([])
+   const pizzas = useSelector<AppRootStoreType, PizzaType[]>(state => state.pizzasData.pizzas)
+   const dispatch = useDispatch()
 
    React.useEffect(() => {
-      axios.get<{pizzas: PizzaType[]}>('http://localhost:3000/db.json')
-         .then(res => setPizzas(res.data.pizzas))
-   }, [])
+      dispatch(getPizzas())
+   }, [dispatch])
 
    return (
       <div className="App">
