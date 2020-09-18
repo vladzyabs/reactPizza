@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import {PizzaType} from '../../App'
+import {PizzaType} from '../../redux/types/pizzas'
 
 type PizzaBlockPropsType = PizzaType
 
