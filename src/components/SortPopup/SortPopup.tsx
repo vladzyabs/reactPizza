@@ -1,18 +1,24 @@
 import React from 'react'
+import {FilterSortType} from '../../redux/types/filters'
+import {useSelector, useDispatch} from 'react-redux'
+import {AppRootStoreType} from '../../redux/store'
+import {setSortBy} from '../../redux/actions/filters'
 
 type SortPopupPropsType = {
-   items: string[]
+   items: { type: FilterSortType, name: string }[]
    onClickItem?: () => void
 }
 
 function SortPopup({items}: SortPopupPropsType) {
+
+   const activeItemType = useSelector<AppRootStoreType, FilterSortType>(state => state.filters.sortBy)
+   const dispatch = useDispatch()
 
    React.useEffect(() => {
       document.body.addEventListener('click', handleOutsideClick)
    }, [])
 
    const [visiblePopup, setVisiblePopup] = React.useState<boolean>(false)
-   const [activeItem, setActiveItem] = React.useState<number>(0)
    const sortRef = React.useRef<HTMLDivElement>(null)
 
    const handleOutsideClick = (e: MouseEvent | any) => {
@@ -25,8 +31,8 @@ function SortPopup({items}: SortPopupPropsType) {
       setVisiblePopup(prevState => !prevState)
    }
 
-   const onSelectItem = (index: number) => {
-      setActiveItem(index)
+   const onSelectItem = (value: FilterSortType) => {
+      dispatch(setSortBy(value))
       setVisiblePopup(false)
    }
 
@@ -45,16 +51,16 @@ function SortPopup({items}: SortPopupPropsType) {
                />
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={toggleVisiblePopup}>{items[activeItem]}</span>
+            <span onClick={toggleVisiblePopup}>{items[items.findIndex(i => i.type === activeItemType)].name}</span>
          </div>
          {
             visiblePopup && <div className="sort__popup">
                 <ul>
                    {
                       items.map((item, index) =>
-                         <li key={`${item}_${index}`}
-                             className={activeItem === index ? 'active' : ''}
-                             onClick={() => onSelectItem(index)}>{item}</li>)
+                         <li key={`${item.type}_${index}`}
+                             className={items.findIndex(i => i.type === activeItemType) === index ? 'active' : ''}
+                             onClick={() => onSelectItem(item.type)}>{item.name}</li>)
                    }
                 </ul>
             </div>
