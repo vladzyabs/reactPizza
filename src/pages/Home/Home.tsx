@@ -18,7 +18,6 @@ function Home() {
    const pizzas = useSelector<AppRootStoreType, PizzaType[]>(state => state.pizzasData.pizzas)
    const dispatch = useDispatch()
 
-
    const onClickCategoryHandler = React.useCallback(
       (value: number | null) => dispatch(setCategory(value)),
       [dispatch],
