@@ -2,7 +2,7 @@ import {FilterSortType} from '../types/filters'
 import {ActionType} from '../actions/filters'
 
 const initialState = {
-   category: 0,
+   category: null as number | null,
    sortBy: 'popular' as FilterSortType,
 }
 

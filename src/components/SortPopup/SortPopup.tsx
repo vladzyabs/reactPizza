@@ -1,18 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {FilterSortType} from '../../redux/types/filters'
-import {useSelector, useDispatch} from 'react-redux'
-import {AppRootStoreType} from '../../redux/store'
-import {setSortBy} from '../../redux/actions/filters'
 
 type SortPopupPropsType = {
    items: { type: FilterSortType, name: string }[]
-   onClickItem?: () => void
+   onClickItem: (value: FilterSortType) => void
 }
 
-function SortPopup({items}: SortPopupPropsType) {
+function SortPopup({items, onClickItem}: SortPopupPropsType) {
 
-   const activeItemType = useSelector<AppRootStoreType, FilterSortType>(state => state.filtersData.sortBy)
-   const dispatch = useDispatch()
+   const [activeItem, setActiveItem] = useState<FilterSortType>('popular')
 
    React.useEffect(() => {
       document.body.addEventListener('click', handleOutsideClick)
@@ -31,8 +27,9 @@ function SortPopup({items}: SortPopupPropsType) {
       setVisiblePopup(prevState => !prevState)
    }
 
-   const onSelectItem = (value: FilterSortType) => {
-      dispatch(setSortBy(value))
+   const onSelectItem = (item: FilterSortType) => {
+      setActiveItem(item)
+      onClickItem(item)
       setVisiblePopup(false)
    }
 
@@ -51,7 +48,7 @@ function SortPopup({items}: SortPopupPropsType) {
                />
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={toggleVisiblePopup}>{items[items.findIndex(i => i.type === activeItemType)].name}</span>
+            <span onClick={toggleVisiblePopup}>{items[items.findIndex(i => i.type === activeItem)].name}</span>
          </div>
          {
             visiblePopup && <div className="sort__popup">
@@ -59,7 +56,7 @@ function SortPopup({items}: SortPopupPropsType) {
                    {
                       items.map((item, index) =>
                          <li key={`${item.type}_${index}`}
-                             className={items.findIndex(i => i.type === activeItemType) === index ? 'active' : ''}
+                             className={items.findIndex(i => i.type === activeItem) === index ? 'active' : ''}
                              onClick={() => onSelectItem(item.type)}>{item.name}</li>)
                    }
                 </ul>
@@ -69,4 +66,4 @@ function SortPopup({items}: SortPopupPropsType) {
    )
 }
 
-export default SortPopup
+export default React.memo(SortPopup)
