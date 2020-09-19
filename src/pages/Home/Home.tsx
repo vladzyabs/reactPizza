@@ -1,10 +1,11 @@
 import React from 'react'
-import {Categories, SortPopup, PizzaBlock} from '../../components'
+import {Categories, SortPopup, PizzaBlock, PizzaLoader} from '../../components'
 import {PizzaType} from '../../redux/types/pizzas'
 import {FilterSortType} from '../../redux/types/filters'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStoreType} from '../../redux/store'
 import {setCategory, setSort} from '../../redux/actions/filters'
+import {getPizzas} from '../../redux/actions/pizzas'
 
 const categoryItems = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 const sortItems: { type: FilterSortType, name: string }[] = [
@@ -16,7 +17,12 @@ const sortItems: { type: FilterSortType, name: string }[] = [
 function Home() {
 
    const pizzas = useSelector<AppRootStoreType, PizzaType[]>(state => state.pizzasData.pizzas)
+   const isLoaded = useSelector<AppRootStoreType, boolean>(state => state.pizzasData.isLoaded)
    const dispatch = useDispatch()
+
+   React.useEffect(() => {
+      dispatch(getPizzas())
+   }, [dispatch])
 
    const onClickCategoryHandler = React.useCallback(
       (value: number | null) => dispatch(setCategory(value)),
@@ -45,7 +51,11 @@ function Home() {
 
          <div className="content__items">
             {
-               pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza}/>)
+               !isLoaded
+                  ? pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza}/>)
+                  : Array(10)
+                     .fill(0)
+                     .map((el, i) => <div key={i} className="pizza-block"><PizzaLoader/></div>)
             }
          </div>
 

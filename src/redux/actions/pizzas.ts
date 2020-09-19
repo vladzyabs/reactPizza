@@ -22,6 +22,8 @@ export type ActionType
 
 export const getPizzas = () =>
    async (dispatch: Dispatch) => {
+      dispatch(setLoaded(true))
       const res = await pizzasAPI.getPizzas()
       dispatch(setPizzas(res.data))
+      dispatch(setLoaded(false))
    }
