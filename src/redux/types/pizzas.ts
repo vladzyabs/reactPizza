@@ -1,5 +1,5 @@
 export const SET_PIZZAS = 'SET_PIZZAS'
-export const SET_LOADED = 'SET_LOADED'
+export const SET_LOADING = 'SET_LOADING'
 
 export type PizzaType = {
    id: number
