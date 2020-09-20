@@ -1,10 +1,16 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import {Button} from '../index'
+import {useSelector} from 'react-redux'
+import {AppRootStoreType} from '../../redux/store'
 
 const logoSVG = require('../../assets/img/pizza-logo.svg') as string
 
 const Header = () => {
+
+   const totalCount = useSelector<AppRootStoreType, number>(state => state.cartData.totalCount)
+   const totalPrice = useSelector<AppRootStoreType, number>(state => state.cartData.totalPrice)
+
    return (
       <div className="header">
          <div className="container">
@@ -22,7 +28,7 @@ const Header = () => {
             <NavLink to={'/cart'}>
                <div className="header__cart">
                   <Button classes={'button--cart'}>
-                     <span>520 ₽</span>
+                     <span>{totalPrice} ₽</span>
                      <div className="button__delimiter">{''}</div>
                      <svg
                         width="18"
@@ -53,7 +59,7 @@ const Header = () => {
                            strokeLinejoin="round"
                         />
                      </svg>
-                     <span>3</span>
+                     <span>{totalCount}</span>
                   </Button>
                </div>
             </NavLink>
@@ -63,4 +69,4 @@ const Header = () => {
    )
 }
 
-export default Header
+export default React.memo(Header)

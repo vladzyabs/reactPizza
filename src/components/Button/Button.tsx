@@ -9,8 +9,11 @@ type ButtonPropsType = {
 }
 
 function Button(props: ButtonPropsType) {
+
+   const onClickHandle = () => props.onClick && props.onClick()
+
    return (
-      <button onClick={() => props.onClick}
+      <button onClick={onClickHandle}
               className={
                  classNames('button',
                     {'button--outline': props.outline},
