@@ -16,8 +16,9 @@ function SortPopup({items, activeItem, onClickItem}: SortPopupPropsType) {
    const [visiblePopup, setVisiblePopup] = React.useState<boolean>(false)
    const sortRef = React.useRef<HTMLDivElement>(null)
 
-   const handleOutsideClick = (e: MouseEvent | any) => {
-      if (!e.path.includes(sortRef.current)) {
+   const handleOutsideClick = (event: MouseEvent | any) => {
+      const path = event.path || (event.composedPath && event.composedPath()) // firefox uses composedPath
+      if (!path.includes(sortRef.current)) {
          setVisiblePopup(false)
       }
    }

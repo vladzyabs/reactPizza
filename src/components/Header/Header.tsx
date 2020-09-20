@@ -1,7 +1,8 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import Button from '../Button/Button'
-const logoSVG = require("../../assets/img/pizza-logo.svg") as string;
+import {Button} from '../index'
+
+const logoSVG = require('../../assets/img/pizza-logo.svg') as string
 
 const Header = () => {
    return (
@@ -54,9 +55,6 @@ const Header = () => {
                      </svg>
                      <span>3</span>
                   </Button>
-                  {/*<a href="/cart.html" className="button button--cart">*/}
-
-                  {/*</a>*/}
                </div>
             </NavLink>
 
