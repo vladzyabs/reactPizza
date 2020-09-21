@@ -1,15 +1,19 @@
 import React from 'react'
 import classNames from 'classnames'
-import {PizzaType} from '../../redux/types/pizzas'
+import {availablePizzaSizes, availablePizzaTypes, PizzaType} from '../../redux/types/pizzas'
+import {Button} from '../index'
+import {PizzaToCartType} from '../../redux/types/cart'
 
-type PizzaBlockPropsType = PizzaType
+type PizzaBlockPropsType = {
+   pizza: PizzaType
+   addedCount: number
+   onClickAddPizza: (objPizza: PizzaToCartType) => void
+}
 
 function PizzaBlock(props: PizzaBlockPropsType) {
 
-   const availableNames = ['тонокое', 'традиционное']
-   const availableSizes = [26, 30, 40]
-   const [activeType, setActiveType] = React.useState<number>(props.types[0])
-   const [activeSize, setActiveSize] = React.useState<number>(props.sizes[0])
+   const [activeType, setActiveType] = React.useState<number>(props.pizza.types[0])
+   const [activeSize, setActiveSize] = React.useState<number>(props.pizza.sizes[0])
 
    const onSelectType = (type: number) => {
       setActiveType(type)
@@ -19,32 +23,44 @@ function PizzaBlock(props: PizzaBlockPropsType) {
       setActiveSize(size)
    }
 
+   const addPizzaHandler = () => {
+      const objPizza: PizzaToCartType = {
+         id: props.pizza.id,
+         name: props.pizza.name,
+         imageUrl: props.pizza.imageUrl,
+         price: props.pizza.price,
+         size: activeSize,
+         type: activeType,
+      }
+      props.onClickAddPizza(objPizza)
+   }
+
    return (
       <div className="pizza-block">
          <img className="pizza-block__image"
-              src={props.imageUrl}
+              src={props.pizza.imageUrl}
               alt="Pizza"/>
-         <h4 className="pizza-block__title">{props.name}</h4>
+         <h4 className="pizza-block__title">{props.pizza.name}</h4>
          <div className="pizza-block__customization">
             <div className="pizza-block__selector">
                <ul>
                   {
-                     availableNames.map((type, index) =>
+                     availablePizzaTypes.map((type, index) =>
                         <li key={type}
                             className={classNames({
                                active: activeType === index,
-                               disable: !props.types.includes(index),
+                               disable: !props.pizza.types.includes(index),
                             })}
                             onClick={() => onSelectType(index)}>{type}</li>)
                   }
                </ul>
                <ul>
                   {
-                     availableSizes.map((size, index) =>
+                     availablePizzaSizes.map((size, index) =>
                         <li key={size}
                             className={classNames({
                                active: activeSize === size,
-                               disable: !props.sizes.includes(size)
+                               disable: !props.pizza.sizes.includes(size)
                             })}
                             onClick={() => onSelectSize(size)}>{size} см.</li>,
                      )
@@ -52,8 +68,8 @@ function PizzaBlock(props: PizzaBlockPropsType) {
                </ul>
             </div>
             <div className="pizza-block__bottom">
-               <div className="pizza-block__price">от {props.price} ₽</div>
-               <div className="button button--outline button--add">
+               <div className="pizza-block__price">от {props.pizza.price} ₽</div>
+               <Button classes="button--add" outline onClick={addPizzaHandler}>
                   <svg width="12"
                        height="12"
                        viewBox="0 0 12 12"
@@ -65,12 +81,12 @@ function PizzaBlock(props: PizzaBlockPropsType) {
                      />
                   </svg>
                   <span>Добавить</span>
-                  <i>2</i>
-               </div>
+                  {props.addedCount ? <i>{props.addedCount}</i> : ''}
+               </Button>
             </div>
          </div>
       </div>
    )
 }
 
-export default PizzaBlock
+export default React.memo(PizzaBlock)

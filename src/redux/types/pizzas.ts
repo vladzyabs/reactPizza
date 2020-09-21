@@ -11,3 +11,6 @@ export type PizzaType = {
    category: number
    rating: number
 }
+
+export const availablePizzaTypes = ['тонокое', 'традиционное']
+export const availablePizzaSizes = [26, 30, 40]

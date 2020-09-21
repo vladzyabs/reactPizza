@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStoreType} from '../../redux/store'
 import {setCategory, setSort} from '../../redux/actions/filters'
 import {getPizzas} from '../../redux/actions/pizzas'
+import {PizzaToCartType} from '../../redux/types/cart'
+import {addPizzaToCart} from '../../redux/actions/cart'
 
 const categoryItems = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 const sortItems: { type: FilterSortType, name: string }[] = [
@@ -20,6 +22,7 @@ function Home() {
    const loading = useSelector<AppRootStoreType, boolean>(state => state.pizzasData.loading)
    const category = useSelector<AppRootStoreType, number | null>(state => state.filtersData.category)
    const sortBy = useSelector<AppRootStoreType, FilterSortType>(state => state.filtersData.sortBy)
+   const cart = useSelector<AppRootStoreType, any>(state => state.cartData.pizzasCart)
    const dispatch = useDispatch()
 
    React.useEffect(() => {
@@ -33,6 +36,11 @@ function Home() {
 
    const onClickSortHandler = React.useCallback(
       (value: FilterSortType) => dispatch(setSort(value)),
+      [dispatch],
+   )
+
+   const onClickAddPizza = React.useCallback(
+      (objPizza: PizzaToCartType) => dispatch(addPizzaToCart(objPizza)),
       [dispatch],
    )
 
@@ -54,10 +62,13 @@ function Home() {
          <div className="content__items">
             {
                !loading
-                  ? pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza}/>)
+                  ? pizzas.map(pizza => <PizzaBlock key={pizza.id}
+                                                    pizza={pizza}
+                                                    addedCount={cart[pizza.id] ? cart[pizza.id].items.length : 0}
+                                                    onClickAddPizza={onClickAddPizza}/>)
                   : Array(12)
                      .fill(0)
-                     .map((el, i) => <div key={i} className="pizza-block"><PizzaLoader/></div>)
+                     .map((_, i) => <PizzaLoader key={i}/>)
             }
          </div>
 
