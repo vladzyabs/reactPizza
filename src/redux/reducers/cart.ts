@@ -12,14 +12,15 @@ type InitialStateType = typeof initialState
 const cartReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
    switch (action.type) {
       case 'cart/ADD_PIZZA':
+         const newItems = {
+            ...state.items,
+            [action.payload.id]: !state.items[action.payload.id]
+               ? [action.payload]
+               : [...state.items[action.payload.id], action.payload],
+         }
          return {
             ...state,
-            items: {
-               ...state.items,
-               [action.payload.id]: !state.items[action.payload.id]
-                  ? [action.payload]
-                  : [...state.items[action.payload.id], action.payload],
-            },
+            items: newItems,
             totalCount: state.totalCount + 1,
             totalPrice: state.totalPrice + action.payload.price,
          }
