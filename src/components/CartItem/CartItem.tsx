@@ -1,7 +1,10 @@
 import React from 'react'
 import {CountMinusSVG, CountPlusSVG, RemoveItemSVG} from '../SVG/SVG'
+import {useDispatch} from 'react-redux'
+import {removePizzaFromCart} from '../../redux/actions/cart'
 
 type CartItemPropsType = {
+   id: number
    imageURL: string
    name: string
    size: number
@@ -11,6 +14,13 @@ type CartItemPropsType = {
 }
 
 function CartItem(props: CartItemPropsType) {
+
+   const dispatch = useDispatch()
+
+   const onClickRemovePizza = () => {
+      dispatch(removePizzaFromCart(props.id))
+   }
+
    return (
       <div className="cart__item">
          <div className="cart__item-img">
@@ -36,7 +46,7 @@ function CartItem(props: CartItemPropsType) {
          <div className="cart__item-price">
             <b>{props.totalPrice} ₽</b>
          </div>
-         <div className="cart__item-remove">
+         <div className="cart__item-remove" onClick={onClickRemovePizza}>
             <div className="button button--outline button--circle">
                <RemoveItemSVG/>
             </div>

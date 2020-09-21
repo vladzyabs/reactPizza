@@ -50,6 +50,7 @@ function Cart() {
                {
                   groupPizzas.map((pizza, index) =>
                      <CartItem key={`${index}_${pizza.size}_${pizza.type}_${pizza.name}`}
+                               id={pizza.id}
                                imageURL={pizza.imageUrl}
                                name={pizza.name}
                                size={pizza.size}
