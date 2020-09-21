@@ -6,6 +6,8 @@ type CartItemPropsType = {
    name: string
    size: number
    type: string
+   totalPrice: number
+   totalCount: number
 }
 
 function CartItem(props: CartItemPropsType) {
@@ -26,13 +28,13 @@ function CartItem(props: CartItemPropsType) {
             <div className="button button--outline button--circle cart__item-count-minus">
                <CountMinusSVG/>
             </div>
-            <b>2</b>
+            <b>{props.totalCount}</b>
             <div className="button button--outline button--circle cart__item-count-plus">
                <CountPlusSVG/>
             </div>
          </div>
          <div className="cart__item-price">
-            <b>770 ₽</b>
+            <b>{props.totalPrice} ₽</b>
          </div>
          <div className="cart__item-remove">
             <div className="button button--outline button--circle">

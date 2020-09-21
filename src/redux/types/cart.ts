@@ -4,7 +4,7 @@ export const CLEAR_CART = 'cart/CLEAR_CART'
 export const SET_TOTAL_COUNT = 'cart/SET_TOTAL_COUNT'
 export const SET_TOTAL_PRICE = 'cart/SET_TOTAL_PRICE'
 
-export type PizzaToCartType= {
+export type PizzaToCartType = {
    id: number
    name: string
    imageUrl: string
@@ -14,5 +14,8 @@ export type PizzaToCartType= {
 }
 
 export type ItemsCartType = {
-   [key: number]: PizzaToCartType[]
+   [key: number]: {
+      items: PizzaToCartType[]
+      totalPrice: number
+   }
 }

@@ -22,7 +22,7 @@ function Home() {
    const loading = useSelector<AppRootStoreType, boolean>(state => state.pizzasData.loading)
    const category = useSelector<AppRootStoreType, number | null>(state => state.filtersData.category)
    const sortBy = useSelector<AppRootStoreType, FilterSortType>(state => state.filtersData.sortBy)
-   const cart = useSelector<AppRootStoreType, any>(state => state.cartData.items)
+   const cart = useSelector<AppRootStoreType, any>(state => state.cartData.pizzasCart)
    const dispatch = useDispatch()
 
    React.useEffect(() => {
@@ -64,7 +64,7 @@ function Home() {
                !loading
                   ? pizzas.map(pizza => <PizzaBlock key={pizza.id}
                                                     pizza={pizza}
-                                                    addedCount={cart[pizza.id] ? cart[pizza.id].length : 0}
+                                                    addedCount={cart[pizza.id] ? cart[pizza.id].items.length : 0}
                                                     onClickAddPizza={onClickAddPizza}/>)
                   : Array(12)
                      .fill(0)
