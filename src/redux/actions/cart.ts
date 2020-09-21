@@ -1,4 +1,4 @@
-import {PizzaToCartType, ADD_PIZZA, REMOVE_GROUP_PIZZA, CLEAR_CART} from '../types/cart'
+import {PizzaToCartType, ADD_PIZZA, REMOVE_GROUP_PIZZAS, CLEAR_CART} from '../types/cart'
 
 export const addPizzaToCart = (objPizza: PizzaToCartType) => ({
    type: ADD_PIZZA,
@@ -6,7 +6,7 @@ export const addPizzaToCart = (objPizza: PizzaToCartType) => ({
 } as const)
 
 export const removePizzaFromCart = (pizzaID: number) => ({
-   type: REMOVE_GROUP_PIZZA,
+   type: REMOVE_GROUP_PIZZAS,
    payload: pizzaID,
 } as const)
 

@@ -30,7 +30,7 @@ const cartReducer = (state: InitialStateType = initialState, action: ActionType)
             totalCount: state.totalCount + 1,
             totalPrice: state.totalPrice + action.payload.price,
          }
-      case 'cart/REMOVE_GROUP_PIZZA':
+      case 'cart/REMOVE_GROUP_PIZZAS':
          const pizzas = {...state.pizzasCart}
          delete pizzas[action.payload]
          return {

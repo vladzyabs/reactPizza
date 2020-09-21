@@ -1,7 +1,6 @@
 import React from 'react'
 import {CountMinusSVG, CountPlusSVG, RemoveItemSVG} from '../SVG/SVG'
-import {useDispatch} from 'react-redux'
-import {removePizzaFromCart} from '../../redux/actions/cart'
+import {Button} from '../index'
 
 type CartItemPropsType = {
    id: number
@@ -11,14 +10,13 @@ type CartItemPropsType = {
    type: string
    totalPrice: number
    totalCount: number
+   onClickRemovePizza: (id: number, name: string) => void
 }
 
 function CartItem(props: CartItemPropsType) {
 
-   const dispatch = useDispatch()
-
-   const onClickRemovePizza = () => {
-      dispatch(removePizzaFromCart(props.id))
+   const handleRemovePizza = () => {
+      props.onClickRemovePizza(props.id, props.name)
    }
 
    return (
@@ -35,21 +33,21 @@ function CartItem(props: CartItemPropsType) {
             <p>{props.type} тесто, {props.size} см.</p>
          </div>
          <div className="cart__item-count">
-            <div className="button button--outline button--circle cart__item-count-minus">
+            <Button classes="button--circle cart__item-count-minus" outline>
                <CountMinusSVG/>
-            </div>
+            </Button>
             <b>{props.totalCount}</b>
-            <div className="button button--outline button--circle cart__item-count-plus">
+            <Button classes="button--circle cart__item-count-plus" outline>
                <CountPlusSVG/>
-            </div>
+            </Button>
          </div>
          <div className="cart__item-price">
             <b>{props.totalPrice} ₽</b>
          </div>
-         <div className="cart__item-remove" onClick={onClickRemovePizza}>
-            <div className="button button--outline button--circle">
+         <div className="cart__item-remove">
+            <Button classes="button--circle" outline onClick={handleRemovePizza}>
                <RemoveItemSVG/>
-            </div>
+            </Button>
          </div>
       </div>
    )

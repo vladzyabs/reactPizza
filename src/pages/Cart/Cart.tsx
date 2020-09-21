@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import EmptyCart from './EmptyCart'
 import {CartItem} from '../../components'
 import {CartSVG, ComeBackArrowSVG, DeleteBasketSVG} from '../../components/SVG/SVG'
-import {clearCart} from '../../redux/actions/cart'
+import {clearCart, removePizzaFromCart} from '../../redux/actions/cart'
 import {AppRootStoreType} from '../../redux/store'
 import {ItemsCartType} from '../../redux/types/cart'
 import {availablePizzaTypes} from '../../redux/types/pizzas'
@@ -19,6 +19,12 @@ function Cart() {
    const onClickClearCart = () => {
       if (window.confirm('Вы действительно хотите очистить корзину?')) {
          dispatch(clearCart())
+      }
+   }
+
+   const onClickRemovePizza = (id: number, name: string) => {
+      if (window.confirm(`Вы действительно хотите удалить из корзины пиццу: ${name}`)) {
+         dispatch(removePizzaFromCart(id))
       }
    }
 
@@ -56,7 +62,8 @@ function Cart() {
                                size={pizza.size}
                                type={availablePizzaTypes[pizza.type]}
                                totalPrice={pizzasCart[pizza.id].totalPrice}
-                               totalCount={pizzasCart[pizza.id].items.length}/>)
+                               totalCount={pizzasCart[pizza.id].items.length}
+                               onClickRemovePizza={onClickRemovePizza}/>)
                }
 
             </div>
