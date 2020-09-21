@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import {PizzaType} from '../../redux/types/pizzas'
+import {availablePizzaSizes, availablePizzaTypes, PizzaType} from '../../redux/types/pizzas'
 import {Button} from '../index'
 import {PizzaToCartType} from '../../redux/types/cart'
 
@@ -12,8 +12,6 @@ type PizzaBlockPropsType = {
 
 function PizzaBlock(props: PizzaBlockPropsType) {
 
-   const availableNames = ['тонокое', 'традиционное']
-   const availableSizes = [26, 30, 40]
    const [activeType, setActiveType] = React.useState<number>(props.pizza.types[0])
    const [activeSize, setActiveSize] = React.useState<number>(props.pizza.sizes[0])
 
@@ -47,7 +45,7 @@ function PizzaBlock(props: PizzaBlockPropsType) {
             <div className="pizza-block__selector">
                <ul>
                   {
-                     availableNames.map((type, index) =>
+                     availablePizzaTypes.map((type, index) =>
                         <li key={type}
                             className={classNames({
                                active: activeType === index,
@@ -58,7 +56,7 @@ function PizzaBlock(props: PizzaBlockPropsType) {
                </ul>
                <ul>
                   {
-                     availableSizes.map((size, index) =>
+                     availablePizzaSizes.map((size, index) =>
                         <li key={size}
                             className={classNames({
                                active: activeSize === size,

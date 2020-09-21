@@ -6,6 +6,7 @@ import {AppRootStoreType} from '../../redux/store'
 import {CartSVG, ComeBackArrowSVG, DeleteBasketSVG} from '../../components/SVG/SVG'
 import {ItemsCartType} from '../../redux/types/cart'
 import EmptyCart from './EmptyCart'
+import {availablePizzaTypes} from '../../redux/types/pizzas'
 
 function Cart() {
 
@@ -17,6 +18,10 @@ function Cart() {
    const onClickClearCart = () => {
       dispatch(clearCart())
    }
+
+   const groupPizzas = Object.keys(items).map(key => {
+      return items[Number(key)][0]
+   })
 
    const isEmpty = (obj: Object) => {
       for (let key in obj) {
@@ -45,9 +50,16 @@ function Cart() {
             </div>
 
             <div className="content__items">
-               <CartItem
-                  imageURL={'https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg'}
-                  name={'Super pizza'} size={40} type={0}/>
+
+               {
+                  groupPizzas.map((pizza, index) =>
+                     <CartItem key={`${index}_${pizza.size}_${pizza.type}_${pizza.name}`}
+                               imageURL={pizza.imageUrl}
+                               name={pizza.name}
+                               size={pizza.size}
+                               type={availablePizzaTypes[pizza.type]}/>)
+               }
+
             </div>
 
             <div className="cart__bottom">

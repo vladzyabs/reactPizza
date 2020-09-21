@@ -5,7 +5,7 @@ type CartItemPropsType = {
    imageURL: string
    name: string
    size: number
-   type: number
+   type: string
 }
 
 function CartItem(props: CartItemPropsType) {
