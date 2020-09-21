@@ -11,12 +11,23 @@ type CartItemPropsType = {
    totalPrice: number
    totalCount: number
    onClickRemovePizza: (id: number, name: string) => void
+   onClickPlusPizza: (id: number) => void
+   onClickMinusPizza: (id: number) => void
 }
 
 function CartItem(props: CartItemPropsType) {
 
    const handleRemovePizza = () => {
       props.onClickRemovePizza(props.id, props.name)
+   }
+
+   const handlePlusPizza = () => {
+      props.onClickPlusPizza(props.id)
+   }
+
+   const handleMinusPizza = () => {
+      props.onClickMinusPizza(props.id)
+
    }
 
    return (
@@ -33,11 +44,13 @@ function CartItem(props: CartItemPropsType) {
             <p>{props.type} тесто, {props.size} см.</p>
          </div>
          <div className="cart__item-count">
-            <Button classes="button--circle cart__item-count-minus" outline>
+            <Button classes="button--circle cart__item-count-minus"
+                    outline onClick={handleMinusPizza} disabled={props.totalCount <=1}>
                <CountMinusSVG/>
             </Button>
             <b>{props.totalCount}</b>
-            <Button classes="button--circle cart__item-count-plus" outline>
+            <Button classes="button--circle cart__item-count-plus"
+                    outline onClick={handlePlusPizza}>
                <CountPlusSVG/>
             </Button>
          </div>

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 type ButtonPropsType = {
    children: any
    outline?: boolean
+   disabled?: boolean
    classes?: string
    onClick?: () => void
 }
@@ -18,7 +19,9 @@ function Button(props: ButtonPropsType) {
                  classNames('button',
                     {'button--outline': props.outline},
                     props.classes,
-                 )}>
+                 )}
+              disabled={props.disabled}
+      >
          {props.children}
       </button>
    )

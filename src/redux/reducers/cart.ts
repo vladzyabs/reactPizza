@@ -46,6 +46,39 @@ const cartReducer = (state: InitialStateType = initialState, action: ActionType)
             totalPrice: 0,
             totalCount: 0,
          }
+      case 'cart/PLUS_PIZZA':
+         return {
+            ...state,
+            pizzasCart: {
+               ...state.pizzasCart,
+               [action.payload]: {
+                  items: [
+                     ...state.pizzasCart[action.payload].items,
+                     state.pizzasCart[action.payload].items[0],
+                  ],
+                  totalPrice:
+                     state.pizzasCart[action.payload].totalPrice + state.pizzasCart[action.payload].items[0].price,
+               },
+            },
+            totalCount: state.totalCount + 1,
+            totalPrice: state.totalPrice + state.pizzasCart[action.payload].items[0].price,
+         }
+      case 'cart/MINUS_PIZZA':
+         return {
+            ...state,
+            pizzasCart: {
+               ...state.pizzasCart,
+               [action.payload]: {
+                  items: state.pizzasCart[action.payload].items.length >= 1
+                     ? [...state.pizzasCart[action.payload].items.slice(1)]
+                     : state.pizzasCart[action.payload].items,
+                  totalPrice:
+                     state.pizzasCart[action.payload].totalPrice - state.pizzasCart[action.payload].items[0].price,
+               },
+            },
+            totalCount: state.totalCount - 1,
+            totalPrice: state.totalPrice - state.pizzasCart[action.payload].items[0].price,
+         }
       default:
          return state
    }
